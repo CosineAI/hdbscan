@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hdbscan-gpu"
+version = "0.1.0"
+description = "Device-resident batched HDBSCAN for Metal and CUDA"
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+requires-python = ">=3.12"
+dependencies = ["numpy==2.3.5"]
+
+[project.urls]
+Repository = "https://github.com/CosineAI/hdbscan"
+Issues = "https://github.com/CosineAI/hdbscan/issues"
+
+[project.optional-dependencies]
+mlx = ["mlx==0.32.3"]
+cuda12 = ["cupy-cuda12x==14.2.0"]
+cuda13 = ["cupy-cuda13x==14.2.0"]
+test = ["scikit-learn==1.9.1", "pytest>=9"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["hdbscan_gpu"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv]
+conflicts = [[{extra = "cuda12"}, {extra = "cuda13"}]]
